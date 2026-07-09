@@ -61,7 +61,7 @@ export function Footer() {
       </div>
 
       <div className="mx-auto mt-10 w-full max-w-6xl border-t border-hairline pt-6 text-center text-xs text-muted">
-        © {year} {PROFILE.name}. All rights reserved. · Built as a living social media command center.
+        © {year} {PROFILE.name}. All rights reserved. · By <a href="https://www.raoufbachiri.com">Raouf Bachiri</a> .
       </div>
     </footer>
   );

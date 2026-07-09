@@ -5,9 +5,3 @@ A single-page, highly interactive portfolio for **Bahaa Nedjma**, Social Media M
 
 Website | www.raoufbachiri.com
 IG | www.instagram.com/rafa.bachiri/
-
-----------------------------------------
--------------------By-------------------
-----------www.raoufbachiri.com----------
-----www.instagram.com/rafa.bachiri/-----
-----------------------------------------

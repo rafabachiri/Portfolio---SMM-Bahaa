@@ -1,26 +1,191 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   DESIGN SYSTEM — Bahaa Nedjma Portfolio
+   Dark, premium "social media command center" aesthetic.
+   Tailwind v4 tokens live in @theme and become utilities,
+   e.g. bg-navy, text-amber, border-hairline.
+   ============================================================ */
+
+@theme {
+  /* Backgrounds */
+  --color-navy: #001d3d; /* primary background */
+  --color-navy-dark: #00142b; /* alternating / darker sections */
+  --color-surface: #0a2a4d; /* cards */
+  --color-surface-2: #0d3358; /* raised card / hover */
+  --color-hairline: #1e3a5f; /* 1px card borders */
+
+  /* Accents (signal colors — use sparingly) */
+  --color-amber: #ffb627; /* CTAs, highlights, active */
+  --color-teal: #2ec4b6; /* charts, data, secondary */
+  --color-success: #3ddc97; /* positive metrics */
+
+  /* Text */
+  --color-ink: #f5f7fa; /* primary text */
+  --color-muted: #9fb3c8; /* secondary / muted text */
+
+  /* Typography */
+  --font-heading: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Radii */
+  --radius-card: 20px;
+  --radius-btn: 12px;
+
+  /* Navy-tinted soft shadows */
+  --shadow-panel: 0 10px 30px -12px rgba(0, 8, 20, 0.7);
+  --shadow-glow-amber: 0 8px 30px -6px rgba(255, 182, 39, 0.35);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ---- Custom cursor: hide native cursor only on fine-pointer devices ---- */
+.custom-cursor-on,
+.custom-cursor-on a,
+.custom-cursor-on button,
+.custom-cursor-on [role="button"],
+.custom-cursor-on input,
+.custom-cursor-on textarea,
+.custom-cursor-on label,
+.custom-cursor-on select {
+  cursor: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ---- Base ---- */
+html {
+  scroll-behavior: smooth;
+  /* Offset anchor targets so the sticky navbar doesn't cover headings */
+  scroll-padding-top: 6rem;
+  background-color: var(--color-navy);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-navy);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-heading {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+/* Tabular numbers for dashboard counters (no width jitter while counting) */
+.tnums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ---- Focus visibility (amber accent, per accessibility spec) ---- */
+:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---- Selection ---- */
+::selection {
+  background: var(--color-amber);
+  color: var(--color-navy-dark);
+}
+
+/* ---- Custom scrollbars (dark theme) ---- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-hairline) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-hairline);
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #2c4d78;
+}
+
+/* ---- Reusable surface / panel treatment ---- */
+.panel {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-panel);
+}
+
+/* ---- Hero dashboard glow backdrop ---- */
+.hero-glow {
+  background:
+    radial-gradient(60% 50% at 75% 15%, rgba(46, 196, 182, 0.14), transparent 70%),
+    radial-gradient(50% 45% at 15% 30%, rgba(255, 182, 39, 0.1), transparent 70%),
+    radial-gradient(80% 60% at 50% 100%, rgba(0, 20, 43, 0.9), transparent 70%);
+}
+
+/* ---- Subtle dashboard grid texture ---- */
+.grid-texture {
+  background-image:
+    linear-gradient(to right, rgba(30, 58, 95, 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 58, 95, 0.35) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 40%, transparent 100%);
+}
+
+/* ---- Amber gradient text for emphasis ---- */
+.text-gradient-amber {
+  background: linear-gradient(100deg, #ffd47a, var(--color-amber) 55%, #ff9e2c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- Marquee (tools strip) ---- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* ---- Reduced motion: kill continuous / non-essential animation ---- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* react-pdf text/annotation layers — keep them from breaking the dark layout */
+.react-pdf__Page {
+  background: transparent !important;
+}
+.react-pdf__Page__canvas {
+  margin: 0 auto;
+  border-radius: 6px;
+  max-width: 100% !important;
+  height: auto !important;
 }
